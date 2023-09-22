@@ -1,0 +1,34 @@
+name: Deploying
+on: [push, workflow_dispatch]
+jobs:
+    linting:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Getting Code
+              uses: actions/checkout@v3
+            - name: Downloading Dependencies
+              run: npm ci
+            - name: Fixing Syntax
+              run: npm run lint
+    testing:
+        needs: linting
+        runs-on: ubuntu-latest
+        steps:
+            - name: Getting Code
+              uses: actions/checkout@v3
+            - name: Downloading Dependencies
+              run: npm ci
+            - name: Testing
+              run: npm run test
+    deploying:
+        needs: testing
+        runs-on: ubuntu-latest
+        steps:
+            - name: Getting Code
+              uses: actions/checkout@v3
+            - name: Downloading Dependencies
+              run: npm ci
+            - name: Deploying
+              run: echo "deployed \"${{ github.repository }}\" on digital ocean"
+            
+    

@@ -1,0 +1,10 @@
+name: Issue Raised
+on:
+    issues:
+      types: [opened, edited, milestoned]
+jobs:
+    shout:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Getting the raiser context
+              run: echo "${{ toJson(github.event.issue) }}"
